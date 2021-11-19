@@ -1,6 +1,9 @@
-package com.example.markmypark;
+package com.example.markmypark.entity;
 
+import com.example.markmypark.entity.Booking;
 import org.springframework.data.annotation.Id;
+
+import java.util.List;
 
 public class User {
 
@@ -8,7 +11,19 @@ public class User {
     public String firstName;
     public String lastName;
     public String email;
-    public String phoneno;
+    public String phoneNo;
+    public double wallet =0.0;
+    public List<Booking> bookingList;
+
+    public User(String firstName, String lastName, String email, String phoneNo, double wallet) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.phoneNo = phoneNo;
+        this.wallet = wallet;
+    }
+
+
 
 
     public User() {}

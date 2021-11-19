@@ -1,4 +1,4 @@
-package com.example.markmypark;
+package com.example.markmypark.entity;
 import org.springframework.data.annotation.Id;
 import java.util.*;
 
@@ -6,26 +6,22 @@ public class ParkingSlot {
 
     @Id public String id;
     public String location;
-    public double rate;
-    public Date date;
-    public Date check_in;
-    public Date check_out;
-    public int wlistno;
-    public int workers_employed;
+    public Worker worker;
+    public double parkingRatePerHour;
 
-    ParkingSlot(String id,
-                String location,
-                double rate,
-                Date date,
-                Date check_in,
-                Date check_out) {
-        this.id = id;
-        this.location = location;
-        this.rate = rate;
-        this.date = date;
-        this.check_in = check_in;
-        this.check_out = check_out;
+    public double getTotalPrice() {
+        return totalPrice;
     }
+
+    public void setTotalPrice() {
+        this.totalPrice = parkingRatePerHour + worker.getRatePerHour();
+    }
+
+    public double totalPrice;
+    public List<DayBooking> allBookings;
+
+    //if no match found display based on location
+
 
     public ArrayList<ParkingSlot> find(String loc, ArrayList<ParkingSlot> arr) {
         ArrayList<ParkingSlot> match = new ArrayList<ParkingSlot>();
@@ -36,7 +32,7 @@ public class ParkingSlot {
 
         return match;
     }
-
+/*
     public ArrayList<ParkingSlot> find_by_date(Date dt, ArrayList<ParkingSlot> arr) {
         ArrayList<ParkingSlot> match = new ArrayList<ParkingSlot>();
         for(ParkingSlot obj : arr){
@@ -65,5 +61,5 @@ public class ParkingSlot {
         }
 
         return match;
-    }
+    }*/
 }
