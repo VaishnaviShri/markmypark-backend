@@ -18,7 +18,7 @@ public class UserController {
 
     @RequestMapping("/sayhi")
     public String sayHi(){
-        return "Hi!";
+        return userRepository.findALife();
     }
 
     @RequestMapping("/getall")
