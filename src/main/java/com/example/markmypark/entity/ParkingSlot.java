@@ -18,16 +18,39 @@ public class ParkingSlot {
     }
 
     public double totalPrice;
-    public List<DayBooking> allBookings;
+    public ArrayList<DayBooking> allBookings;
 
     //if no match found display based on location
 
 
-    public ArrayList<ParkingSlot> find(String loc, ArrayList<ParkingSlot> arr) {
-        ArrayList<ParkingSlot> match = new ArrayList<ParkingSlot>();
+    public ArrayList<ParkingSlot> findbyloc(String loc, ArrayList<ParkingSlot> arr) {
+        ArrayList<ParkingSlot> match = new ArrayList<>();
         for(ParkingSlot obj : arr){
             if(obj.location != null && obj.location.equals(loc))
                 match.add(obj);
+        }
+
+        return match;
+    }
+
+    public ArrayList<ParkingSlot> find(String loc, Date dt, int ch_in, int ch_out, ArrayList<ParkingSlot> arr) {
+        ArrayList<ParkingSlot> match = new ArrayList<>();
+        for(ParkingSlot obj : arr){
+            if(obj.location != null && obj.location.equals(loc)){
+                for(DayBooking db : obj.allBookings){
+                    if(db.date.equals(dt)){
+                        int flag = 0;
+                        for(int i = ch_in; i <= ch_out; i++){
+                            if(db.usersList.get(i) != null){
+                                flag = 1;
+                                break;
+                            }
+                        }
+                        if(flag == 0)
+                            match.add(obj);
+                    }
+                }
+            }
         }
 
         return match;
