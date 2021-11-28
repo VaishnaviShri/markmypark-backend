@@ -1,7 +1,9 @@
 package com.example.markmypark;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
+@Document(collection = "new_users")
 public class User {
 
     @Id
@@ -23,5 +25,8 @@ public class User {
                 id, firstName, lastName);
     }
 
+    public String getName() {
+        return firstName.concat(lastName);
+    }
 }
 

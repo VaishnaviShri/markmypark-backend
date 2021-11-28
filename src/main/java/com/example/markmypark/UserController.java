@@ -1,12 +1,10 @@
 package com.example.markmypark;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
+import java.util.concurrent.ExecutionException;
 
 
 @RestController
@@ -15,6 +13,9 @@ public class UserController {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+   FirebaseService firebaseService;
 
     @RequestMapping("/sayhi")
     public String sayHi(){
@@ -26,6 +27,12 @@ public class UserController {
         return userRepository.findAll();
     }
 
+    @PostMapping("/addFirebaseUser")
+    public String postExample(@RequestBody User user) throws InterruptedException,  ExecutionException {
+       //return "post ka message";
+        return firebaseService.saveUserDetails(user);
+    }
+    
    /* @PostMapping("/postUser")
     public String postBody(@RequestBody String fullName) {
         return "Hello " + fullName;
@@ -45,8 +52,8 @@ public class UserController {
 
     @PostMapping("/add")
     public User newUser(@RequestBody User newUser){
-        return userRepository.save(newUser);
-    }
+       return userRepository.save(newUser);
+   }
 
     /*
     @RequestParam("users/searchName") String lastname)
