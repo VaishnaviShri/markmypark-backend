@@ -1,15 +1,35 @@
 package com.example.markmypark;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
+import com.example.markmypark.Booking;
+import com.google.cloud.firestore.annotation.DocumentId;
+import org.springframework.cloud.gcp.data.firestore.Document;
 
-@Document(collection = "new_users")
+
+import java.util.List;
+
+
+@Document(collectionName = "users")
 public class User {
 
-    @Id
+    @DocumentId
     public String id;
     public String firstName;
     public String lastName;
+    public String email;
+    public String phoneNo;
+    public double wallet =0.0;
+    public List<Booking> bookingList;
+
+    public User(String firstName, String lastName, String email, String phoneNo, double wallet) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.phoneNo = phoneNo;
+        this.wallet = wallet;
+    }
+
+
+
 
     public User() {}
 
@@ -18,6 +38,9 @@ public class User {
         this.lastName = lastName;
     }
 
+    public String getName(){
+        return firstName.concat(lastName);
+    }
     @Override
     public String toString() {
         return String.format(
@@ -25,8 +48,5 @@ public class User {
                 id, firstName, lastName);
     }
 
-    public String getName() {
-        return firstName.concat(lastName);
-    }
 }
 

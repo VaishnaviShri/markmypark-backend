@@ -14,16 +14,18 @@ public class FirebaseInitialize {
     @PostConstruct
     public void initalize(){
         try {
-            String path ="C:\\sem 3-1\\OOP\\project\\markmypark\\markmypark\\serviceAccountKey.json";
-            //"path/to/serviceAccountKey.json"
+            //String path ="C:\\sem 3-1\\OOP\\project\\markmypark\\markmypark\\serviceAccountKey.json";
+
             FileInputStream serviceAccount =
-                    new FileInputStream(path);
+                    new FileInputStream("path/to/serviceAccountKey.json");
 
             FirebaseOptions options = new FirebaseOptions.Builder()
                     .setCredentials(GoogleCredentials.fromStream(serviceAccount))
+                    .setDatabaseUrl("https://markmypark-4ee85-default-rtdb.europe-west1.firebasedatabase.app")
                     .build();
 
             FirebaseApp.initializeApp(options);
+
         }catch (Exception e){
             e.printStackTrace();
         }
