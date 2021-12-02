@@ -62,6 +62,18 @@ public class ParkingSlotService {
         }
         return match;
     }
+    public List<ParkingSlot> getSLotsByLocation(String location) throws ExecutionException, InterruptedException {
+
+        ApiFuture<QuerySnapshot> future = dbFirestore.collection("parking_slots")
+                .whereEqualTo("location", location)
+                .get();
+        List<QueryDocumentSnapshot> documents = future.get().getDocuments();
+        List<ParkingSlot> allParkingSlots = List.of(new ParkingSlot[]{new ParkingSlot("","",0)});
+        for (QueryDocumentSnapshot document : documents) {
+            allParkingSlots.add(document.toObject(ParkingSlot.class));
+        }
+        return allParkingSlots;
+    }
 
     public ParkingSlot getSlotById(String id) throws ExecutionException, InterruptedException {
         DocumentReference docRef = dbFirestore.collection("parking_slots").document(id);

@@ -33,10 +33,18 @@ public class ParkingSlotController {
     }
 
     @RequestMapping("/getbyid")
-    public ParkingSlot getSlotByLocation(
+    public ParkingSlot getSlotById(
             @RequestParam("id") String id
     ) throws ExecutionException, InterruptedException {
         return parkingSlotService.getSlotById(id);
+    }
+
+    //when no matching slots found display all the slots for the searched location
+    @RequestMapping("/getbylocation")
+    public List<ParkingSlot> getSlotsByLocation(
+            @RequestParam("location") String location
+    ) throws ExecutionException, InterruptedException {
+        return parkingSlotService.getSLotsByLocation(location);
     }
 
 }

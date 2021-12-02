@@ -12,6 +12,7 @@ public class Worker {
     @DocumentId
     public String workerID;
     public int rating;
+    public int noOfReviews =0;
     public Map<String, Double> amenities = Map.of("car cleaning", 560.0, "air pressure check", 69.0);
     public double ratePerHour;
 

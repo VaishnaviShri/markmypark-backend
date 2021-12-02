@@ -15,7 +15,7 @@ public class UserController {
     //private UserRepository userRepository;
 
     @Autowired
-    FirebaseService firebaseService;
+    UserService userService;
 
     @RequestMapping("/sayhi")
     public String sayHi(){
@@ -25,16 +25,18 @@ public class UserController {
     @PostMapping("/add")
     public String postExample(@RequestBody User user) throws InterruptedException,  ExecutionException {
         //return "post ka message";
-        return firebaseService.saveUserDetails(user);
+        return userService.saveUserDetails(user);
     }
     @RequestMapping("/getall")
     public List<User> getAllUsers() throws ExecutionException, InterruptedException {
-        return firebaseService.getAllUsers();
+        return userService.getAllUsers();
     }
     @RequestMapping("/getUser")
     public User getUser(@RequestParam String userId) throws ExecutionException, InterruptedException {
-        return firebaseService.getUser(userId);
+        return userService.getUser(userId);
     }
+
+
     /*
 
 

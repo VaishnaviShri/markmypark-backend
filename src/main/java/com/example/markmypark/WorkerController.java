@@ -29,5 +29,7 @@ public class WorkerController {
         return workerService.getWorker(id);
     }
 
+    //TODO: function to update worker rating with new average
+
 
 }

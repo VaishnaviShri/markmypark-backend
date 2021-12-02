@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 @Service
-public class FirebaseService {
+public class UserService {
     Firestore dbFirestore = FirestoreClient.getFirestore();
 
     public String saveUserDetails(User user) throws ExecutionException, InterruptedException {
@@ -40,5 +40,7 @@ public class FirebaseService {
         }
         return user;
     }
+    //TODO: function to update wallet
+    //TODO: function to add booking object to a user with a particular id
 
 }
