@@ -1,4 +1,4 @@
-package com.example.markmypark;
+package com.example.markmypark.entites;
 import org.springframework.data.annotation.Id;
 import java.util.Date;
 

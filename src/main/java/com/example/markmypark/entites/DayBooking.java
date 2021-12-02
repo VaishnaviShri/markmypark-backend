@@ -1,4 +1,4 @@
-package com.example.markmypark;
+package com.example.markmypark.entites;
 
 import java.util.*;
 

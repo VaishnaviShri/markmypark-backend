@@ -1,6 +1,6 @@
-package com.example.markmypark;
+package com.example.markmypark.user;
 
-import com.example.markmypark.Booking;
+import com.example.markmypark.entites.Booking;
 import com.google.cloud.firestore.annotation.DocumentId;
 import org.springframework.cloud.gcp.data.firestore.Document;
 
@@ -20,7 +20,8 @@ public class User {
     public double wallet =0.0;
     public List<Booking> bookingList;
 
-    public User(String firstName, String lastName, String email, String phoneNo, double wallet) {
+    public User(String id, String firstName, String lastName, String email, String phoneNo, double wallet) {
+        this.id =id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
@@ -36,16 +37,6 @@ public class User {
     public User(String firstName, String lastName) {
         this.firstName = firstName;
         this.lastName = lastName;
-    }
-
-    public String getName(){
-        return firstName.concat(lastName);
-    }
-    @Override
-    public String toString() {
-        return String.format(
-                "User[id=%s, firstName='%s', lastName='%s']",
-                id, firstName, lastName);
     }
 
 }

@@ -1,4 +1,4 @@
-package com.example.markmypark;
+package com.example.markmypark.worker;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -11,7 +11,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/workers")
 public class WorkerController {
-
+/*
     @Autowired
     private WorkerRepository workerRepository;
 
@@ -24,4 +24,6 @@ public class WorkerController {
     public List<Worker> getAllWorkers(){
         return (List<Worker>) workerRepository.findAll();
     }
+    */
+
 }

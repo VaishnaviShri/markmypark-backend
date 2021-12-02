@@ -1,7 +1,8 @@
-package com.example.markmypark;
+package com.example.markmypark.parking;
+import com.example.markmypark.entites.DayBooking;
+import com.example.markmypark.worker.Worker;
 import com.google.cloud.firestore.annotation.DocumentId;
 import org.springframework.cloud.gcp.data.firestore.Document;
-import org.springframework.data.annotation.Id;
 
 import reactor.core.publisher.Mono;
 
@@ -22,16 +23,19 @@ public class ParkingSlot {
         return totalPrice;
     }
 
-    WorkerRepository workerRepository;
+   // WorkerRepository workerRepository;
     public void setTotalPrice() {
         this.totalPrice = parkingRatePerHour + Objects.requireNonNull(worker.block()).getRatePerHour();
     }
 
 
+    public ParkingSlot() {
+
+    }
 
     public ParkingSlot(String location, String workerID, double parkingRatePerHour) {
         this.location = location;
-        this.worker = workerRepository.findById(workerID);
+      //  this.worker = workerRepository.findById(workerID);
         this.parkingRatePerHour = parkingRatePerHour;
     }
 
