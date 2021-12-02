@@ -1,4 +1,4 @@
-package com.example.markmypark.user;
+package com.example.markmypark;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -21,7 +21,8 @@ public class UserController {
     public String sayHi(){
         return "Hi!";
     }
-    @PostMapping("/addFirebaseUser")
+
+    @PostMapping("/add")
     public String postExample(@RequestBody User user) throws InterruptedException,  ExecutionException {
         //return "post ka message";
         return firebaseService.saveUserDetails(user);

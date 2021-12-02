@@ -1,6 +1,5 @@
-package com.example.markmypark.parking;
+package com.example.markmypark;
 import com.example.markmypark.entites.DayBooking;
-import com.example.markmypark.worker.Worker;
 import com.google.cloud.firestore.annotation.DocumentId;
 import org.springframework.cloud.gcp.data.firestore.Document;
 

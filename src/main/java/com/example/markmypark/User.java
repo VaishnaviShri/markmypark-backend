@@ -1,4 +1,4 @@
-package com.example.markmypark.user;
+package com.example.markmypark;
 
 import com.example.markmypark.entites.Booking;
 import com.google.cloud.firestore.annotation.DocumentId;

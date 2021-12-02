@@ -1,4 +1,4 @@
-package com.example.markmypark.worker;
+package com.example.markmypark;
 
 import com.google.cloud.firestore.annotation.DocumentId;
 import org.springframework.cloud.gcp.data.firestore.Document;

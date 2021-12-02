@@ -1,7 +1,6 @@
-package com.example.markmypark.parking;
+package com.example.markmypark;
 
 import com.example.markmypark.entites.DayBooking;
-import com.example.markmypark.user.User;
 import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.*;
 import com.google.firebase.cloud.FirestoreClient;
