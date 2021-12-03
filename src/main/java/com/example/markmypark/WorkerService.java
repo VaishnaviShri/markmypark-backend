@@ -17,7 +17,7 @@ public class WorkerService {
     }
 
     public List<Worker> getAllWorkers() throws ExecutionException, InterruptedException {
-        List<Worker> workerList = new ArrayList<Worker>();//List.of(new Worker[]{new Worker("",0,null)});
+        List<Worker> workerList = new ArrayList<>();
         ApiFuture<QuerySnapshot> future = dbFirestore.collection("workers").get();
         List<QueryDocumentSnapshot> documents = future.get().getDocuments();
         for (QueryDocumentSnapshot document : documents) {

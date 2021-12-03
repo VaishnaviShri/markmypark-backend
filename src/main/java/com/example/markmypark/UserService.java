@@ -20,7 +20,7 @@ public class UserService {
     }
     public List<User> getAllUsers() throws ExecutionException, InterruptedException {
 
-        List<User> usersList = new ArrayList<User>();//List.of(new User[]{new User()});
+        List<User> usersList = new ArrayList<>();
         ApiFuture<QuerySnapshot> future = dbFirestore.collection("users").get();
         List<QueryDocumentSnapshot> documents = future.get().getDocuments();
         for (QueryDocumentSnapshot document : documents) {

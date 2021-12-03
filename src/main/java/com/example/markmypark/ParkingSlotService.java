@@ -19,7 +19,7 @@ public class ParkingSlotService {
 
     public List<ParkingSlot> getAllSlots() throws ExecutionException, InterruptedException {
 
-        List<ParkingSlot> parkingSlots = new ArrayList<ParkingSlot>();//List.of(new ParkingSlot[]{new ParkingSlot()});
+        List<ParkingSlot> parkingSlots = new ArrayList<>();
         ApiFuture<QuerySnapshot> future = dbFirestore.collection("parking_slots").get();
         List<QueryDocumentSnapshot> documents = future.get().getDocuments();
         for (QueryDocumentSnapshot document : documents) {
@@ -34,7 +34,7 @@ public class ParkingSlotService {
                 .whereEqualTo("location", location)
                 .get();
         List<QueryDocumentSnapshot> documents = future.get().getDocuments();
-        List<ParkingSlot> allParkingSlots = List.of(new ParkingSlot[]{new ParkingSlot("","",0)});
+        List<ParkingSlot> allParkingSlots = new ArrayList<>();
         for (QueryDocumentSnapshot document : documents) {
             allParkingSlots.add(document.toObject(ParkingSlot.class));
         }
