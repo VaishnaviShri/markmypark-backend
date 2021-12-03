@@ -10,6 +10,9 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 public class ParkingSlotService {
+    ParkingSlotService(){
+
+    }
     Firestore dbFirestore = FirestoreClient.getFirestore();
 
     public String saveParkingSlot(ParkingSlot parkingSlot) throws ExecutionException, InterruptedException {

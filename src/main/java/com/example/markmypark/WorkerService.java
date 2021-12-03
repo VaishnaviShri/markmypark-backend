@@ -9,6 +9,9 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 public class WorkerService {
+    WorkerService(){
+
+    }
     Firestore dbFirestore = FirestoreClient.getFirestore();
 
     public String saveWorker(Worker worker) throws ExecutionException, InterruptedException {
@@ -30,7 +33,7 @@ public class WorkerService {
         DocumentReference docRef = dbFirestore.collection("workers").document(id);
         ApiFuture<DocumentSnapshot> future = docRef.get();
         DocumentSnapshot document = future.get();
-        Worker worker = new Worker("",0,null);
+        Worker worker = new Worker("",0,0, null);
         if (document.exists()) {
             worker=document.toObject(Worker.class);
         } else {

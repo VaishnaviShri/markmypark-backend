@@ -10,7 +10,7 @@ import java.util.concurrent.ExecutionException;
 @RequestMapping("/parkingslots")
 public class ParkingSlotController {
 
-    private ParkingSlotService parkingSlotService;
+    private ParkingSlotService parkingSlotService = new ParkingSlotService();
 
     @PostMapping("/add")
     String addParkingSlot(@RequestBody ParkingSlot newParkingSlot) throws ExecutionException, InterruptedException {
