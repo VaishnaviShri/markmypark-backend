@@ -3,6 +3,7 @@ package com.example.markmypark;
 import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.*;
 import com.google.firebase.cloud.FirestoreClient;
+import java.util.ArrayList;
 
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -16,7 +17,7 @@ public class WorkerService {
     }
 
     public List<Worker> getAllWorkers() throws ExecutionException, InterruptedException {
-        List<Worker> workerList = List.of(new Worker[]{new Worker("",0,null)});
+        List<Worker> workerList = new ArrayList<Worker>();//List.of(new Worker[]{new Worker("",0,null)});
         ApiFuture<QuerySnapshot> future = dbFirestore.collection("workers").get();
         List<QueryDocumentSnapshot> documents = future.get().getDocuments();
         for (QueryDocumentSnapshot document : documents) {

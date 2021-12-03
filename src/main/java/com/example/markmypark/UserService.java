@@ -6,6 +6,7 @@ import com.google.cloud.firestore.*;
 import com.google.firebase.cloud.FirestoreClient;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
@@ -19,7 +20,7 @@ public class UserService {
     }
     public List<User> getAllUsers() throws ExecutionException, InterruptedException {
 
-        List<User> usersList = List.of(new User[]{new User()});
+        List<User> usersList = new ArrayList<User>();//List.of(new User[]{new User()});
         ApiFuture<QuerySnapshot> future = dbFirestore.collection("users").get();
         List<QueryDocumentSnapshot> documents = future.get().getDocuments();
         for (QueryDocumentSnapshot document : documents) {
