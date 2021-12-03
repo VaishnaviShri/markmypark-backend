@@ -46,5 +46,9 @@ public class ParkingSlotController {
     ) throws ExecutionException, InterruptedException {
         return parkingSlotService.getSLotsByLocation(location);
     }
+    @RequestMapping("getalllocations")
+    public List<String> getAllLocations() throws ExecutionException, InterruptedException {
+        return parkingSlotService.getlocationList();
+    }
 
 }

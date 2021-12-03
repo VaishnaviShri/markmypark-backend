@@ -32,9 +32,10 @@ public class UserController {
         return userService.getAllUsers();
     }
     @RequestMapping("/getUser")
-    public User getUser(@RequestParam String userId) throws ExecutionException, InterruptedException {
-        return userService.getUser(userId);
+    public User getUser(@RequestParam String uid) throws ExecutionException, InterruptedException {
+        return userService.getUser(uid);
     }
+
 
 
     /*

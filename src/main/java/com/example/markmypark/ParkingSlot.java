@@ -23,7 +23,7 @@ public class ParkingSlot {
         return totalPrice;
     }
 
-    WorkerService workerService;
+    WorkerService workerService = new WorkerService();
     public void setTotalPrice() {
         this.totalPrice = parkingRatePerHour + Objects.requireNonNull(worker).getRatePerHour();
     }

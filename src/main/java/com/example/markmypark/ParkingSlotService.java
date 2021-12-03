@@ -84,4 +84,13 @@ public class ParkingSlotService {
         DocumentSnapshot document = future.get();
         return document.toObject(ParkingSlot.class);
     }
+
+    public List<String> getlocationList() throws ExecutionException, InterruptedException {
+        List<ParkingSlot> allSlots = getAllSlots();
+        List<String> locations = new ArrayList<>();
+        for(ParkingSlot obj: allSlots){
+            locations.add(obj.location);
+        }
+        return locations;
+    }
 }
