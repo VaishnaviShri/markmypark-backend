@@ -27,6 +27,9 @@ public class Worker {
         }
         this.ratePerHour = ratePerHour;
     }
+    public Worker(){
+
+    }
 
 
 
