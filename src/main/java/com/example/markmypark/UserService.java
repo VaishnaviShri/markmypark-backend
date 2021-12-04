@@ -1,12 +1,14 @@
 package com.example.markmypark;
 
 
+import com.example.markmypark.entites.Booking;
 import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.*;
 import com.google.firebase.cloud.FirestoreClient;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
@@ -43,5 +45,14 @@ public class UserService {
     }
     //TODO: function to update wallet
     //TODO: function to add booking object to a user with a particular id
+    public User addUserBooking(int h, String userID, String parkingSlotID, Date dt_checkin, Date dt_checkout, int refno) throws ExecutionException, InterruptedException {
+        User u_obj = getUser(userID);
+        Booking book_obj = new Booking(refno, parkingSlotID, dt_checkin, dt_checkout);
+        u_obj.book(book_obj);
+
+        saveUserDetails(u_obj);
+
+        return u_obj;
+    }
 
 }

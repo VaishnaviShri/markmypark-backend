@@ -5,8 +5,7 @@ import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.*;
 import com.google.firebase.cloud.FirestoreClient;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 import java.util.concurrent.ExecutionException;
 
 public class ParkingSlotService {
@@ -34,7 +33,7 @@ public class ParkingSlotService {
                 .whereEqualTo("location", location)
                 .get();
         List<QueryDocumentSnapshot> documents = future.get().getDocuments();
-        List<ParkingSlot> allParkingSlots = List.of(new ParkingSlot[]{new ParkingSlot("","",0)});
+        List<ParkingSlot> allParkingSlots = new ArrayList<ParkingSlot>();//List.of(new ParkingSlot[]{new ParkingSlot("","",0)});
         for (QueryDocumentSnapshot document : documents) {
             allParkingSlots.add(document.toObject(ParkingSlot.class));
         }
@@ -68,7 +67,7 @@ public class ParkingSlotService {
                 .whereEqualTo("location", location)
                 .get();
         List<QueryDocumentSnapshot> documents = future.get().getDocuments();
-        List<ParkingSlot> allParkingSlots = List.of(new ParkingSlot[]{new ParkingSlot("","",0)});
+        List<ParkingSlot> allParkingSlots = new ArrayList<ParkingSlot>();//List.of(new ParkingSlot[]{new ParkingSlot("","",0)});
         for (QueryDocumentSnapshot document : documents) {
             allParkingSlots.add(document.toObject(ParkingSlot.class));
         }
@@ -80,5 +79,16 @@ public class ParkingSlotService {
         ApiFuture<DocumentSnapshot> future = docRef.get();
         DocumentSnapshot document = future.get();
         return document.toObject(ParkingSlot.class);
+    }
+
+    public void addParkingSlotBooking(int h, String userID, String parkingSlotID, Date dt) throws ExecutionException, InterruptedException {
+
+        ParkingSlot obj = getSlotById(parkingSlotID);
+        obj.book(h, userID, dt);
+        saveParkingSlot(obj);
+/*        for(ParkingSlot p_elt : p) {
+            if (p_elt.id.equals(parkingSlotID))
+                p_elt.book(h, userID, dt);
+        }*/
     }
 }

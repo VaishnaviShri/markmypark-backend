@@ -3,6 +3,7 @@ package com.example.markmypark;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
@@ -35,7 +36,10 @@ public class UserController {
     public User getUser(@RequestParam String userId) throws ExecutionException, InterruptedException {
         return userService.getUser(userId);
     }
-
+    @RequestMapping("/addbooking")
+    public User booker(@RequestParam int h, @RequestParam String userID, @RequestParam String parkingSlotID, @RequestParam Date dt_checkin, @RequestParam Date dt_checkout, @RequestParam Integer refno) throws ExecutionException, InterruptedException {
+        return userService.addUserBooking(h, userID, parkingSlotID, dt_checkin, dt_checkout, refno);
+    }
 
     /*
 

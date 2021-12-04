@@ -27,6 +27,12 @@ public class ParkingSlot {
         this.totalPrice = parkingRatePerHour + Objects.requireNonNull(worker.block()).getRatePerHour();
     }
 
+    public void book(int h, String userID, Date dt) {
+        for(DayBooking dbook : this.allBookings) {
+            if(dbook.date.equals(dt))
+                dbook.setHour(h, userID);
+        }
+    }
 
     public ParkingSlot() {
 
