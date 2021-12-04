@@ -88,7 +88,7 @@ public class ParkingSlotService {
     }
 
 
-    public void addParkingSlotBooking(int h, String userID, String parkingSlotID, Date dt) throws ExecutionException, InterruptedException {
+    public void addParkingSlotBooking(int h, String userID, String parkingSlotID, String dt) throws ExecutionException, InterruptedException {
 
         ParkingSlot obj = getSlotById(parkingSlotID);
         obj.book(h, userID, dt);

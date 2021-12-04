@@ -8,11 +8,11 @@ public class Booking {
     public int bookingID;
     public int refNo;
     public String pSlotID;
-    public Date checkin;
-    public Date checkout;
+    public int checkin;
+    public int checkout;
     public double billAmount;
 
-    public Booking(int refNo, String pSlotID, Date checkin, Date checkout) {
+    public Booking(int refNo, String pSlotID, int checkin, int checkout) {
         this.refNo = refNo;
         this.pSlotID = pSlotID;
         this.checkin = checkin;
@@ -37,19 +37,19 @@ public class Booking {
         this.pSlotID = slotID;
     }
 
-    public Date getCheckin() {
+    public int getCheckin() {
         return checkin;
     }
 
-    public void setCheckin(Date checkin) {
+    public void setCheckin(int checkin) {
         this.checkin = checkin;
     }
 
-    public Date getCheckout() {
+    public int getCheckout() {
         return checkout;
     }
 
-    public void setCheckout(Date checkout) {
+    public void setCheckout(int checkout) {
         this.checkout = checkout;
     }
 

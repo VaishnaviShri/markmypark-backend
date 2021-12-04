@@ -28,7 +28,7 @@ public class ParkingSlot {
         this.totalPrice = parkingRatePerHour + Objects.requireNonNull(worker).getRatePerHour();
     }
 
-    public void book(int h, String userID, Date dt) {
+    public void book(int h, String userID, String dt) {
         for(DayBooking dbook : this.allBookings) {
             if(dbook.date.equals(dt))
                 dbook.setHour(h, userID);
@@ -41,7 +41,7 @@ public class ParkingSlot {
 
     public ParkingSlot(String location, String workerID, double parkingRatePerHour) throws ExecutionException, InterruptedException {
         this.location = location;
-       this.worker = workerService.getWorker(workerID);
+        this.worker = workerService.getWorker(workerID);
         this.parkingRatePerHour = parkingRatePerHour;
     }
 
