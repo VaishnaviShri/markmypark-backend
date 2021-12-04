@@ -14,8 +14,8 @@ public class UserController {
     //@Autowired
     //private UserRepository userRepository;
 
-    @Autowired
-    UserService userService;
+
+    UserService userService = new UserService();
 
     @RequestMapping("/sayhi")
     public String sayHi(){
