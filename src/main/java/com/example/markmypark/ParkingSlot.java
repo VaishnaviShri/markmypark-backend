@@ -17,7 +17,7 @@ public class ParkingSlot {
     public Worker worker = null;
     public double parkingRatePerHour;
     public double totalPrice;
-    public ArrayList<DayBooking> allBookings;
+    public ArrayList<DayBooking> allBookings = new ArrayList<>();
 
     public double getTotalPrice() {
         return totalPrice;
@@ -41,7 +41,7 @@ public class ParkingSlot {
 
     public ParkingSlot(String location, String workerID, double parkingRatePerHour) throws ExecutionException, InterruptedException {
         this.location = location;
-       this.worker =workerService.getWorker(workerID);
+       this.worker = workerService.getWorker(workerID);
         this.parkingRatePerHour = parkingRatePerHour;
     }
 

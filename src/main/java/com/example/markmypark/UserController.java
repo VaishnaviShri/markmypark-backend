@@ -1,6 +1,7 @@
 package com.example.markmypark;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
@@ -37,7 +38,13 @@ public class UserController {
         return userService.getUser(uid);
     }
     @RequestMapping("/addbooking")
-    public User booker(@RequestParam int h, @RequestParam String userID, @RequestParam String parkingSlotID, @RequestParam Date dt_checkin, @RequestParam Date dt_checkout, @RequestParam Integer refno) throws ExecutionException, InterruptedException {
+    public User booker(@RequestParam int h,
+                       @RequestParam String userID,
+                       @RequestParam String parkingSlotID,
+                       @RequestParam @DateTimeFormat(pattern = "ddMMyyyyhhmm") Date dt_checkin,
+                       @RequestParam @DateTimeFormat(pattern = "ddMMyyyyhhmm") Date dt_checkout,
+                       @RequestParam Integer refno)
+            throws ExecutionException, InterruptedException {
         return userService.addUserBooking(h, userID, parkingSlotID, dt_checkin, dt_checkout, refno);
     }
 
