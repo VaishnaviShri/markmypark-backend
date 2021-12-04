@@ -10,7 +10,7 @@ import java.util.concurrent.ExecutionException;
 @RequestMapping("/workers")
 public class WorkerController {
 
-    private WorkerService workerService;
+    private WorkerService workerService = new WorkerService();
 
     @PostMapping("/add")
     String addWorker(@RequestBody Worker newWorker) throws ExecutionException, InterruptedException {

@@ -17,12 +17,12 @@ public class UserService {
     Firestore dbFirestore = FirestoreClient.getFirestore();
 
     public String saveUserDetails(User user) throws ExecutionException, InterruptedException {
-        ApiFuture<WriteResult> collectionsApiFuture = dbFirestore.collection("users").document(user.id).set(user);
+        ApiFuture<WriteResult> collectionsApiFuture = dbFirestore.collection("users").document(user.uid).set(user);
         return collectionsApiFuture.get().getUpdateTime().toString();
     }
     public List<User> getAllUsers() throws ExecutionException, InterruptedException {
 
-        List<User> usersList = new ArrayList<User>();//List.of(new User[]{new User()});
+        List<User> usersList = new ArrayList<>();
         ApiFuture<QuerySnapshot> future = dbFirestore.collection("users").get();
         List<QueryDocumentSnapshot> documents = future.get().getDocuments();
         for (QueryDocumentSnapshot document : documents) {
@@ -43,6 +43,7 @@ public class UserService {
         }
         return user;
     }
+
     //TODO: function to update wallet
     //TODO: function to add booking object to a user with a particular id
     public User addUserBooking(int h, String userID, String parkingSlotID, Date dt_checkin, Date dt_checkout, int refno) throws ExecutionException, InterruptedException {

@@ -33,13 +33,14 @@ public class UserController {
         return userService.getAllUsers();
     }
     @RequestMapping("/getUser")
-    public User getUser(@RequestParam String userId) throws ExecutionException, InterruptedException {
-        return userService.getUser(userId);
+    public User getUser(@RequestParam String uid) throws ExecutionException, InterruptedException {
+        return userService.getUser(uid);
     }
     @RequestMapping("/addbooking")
     public User booker(@RequestParam int h, @RequestParam String userID, @RequestParam String parkingSlotID, @RequestParam Date dt_checkin, @RequestParam Date dt_checkout, @RequestParam Integer refno) throws ExecutionException, InterruptedException {
         return userService.addUserBooking(h, userID, parkingSlotID, dt_checkin, dt_checkout, refno);
     }
+
 
     /*
 

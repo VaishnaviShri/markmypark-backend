@@ -10,8 +10,9 @@ import java.util.concurrent.ExecutionException;
 @RequestMapping("/parkingslots")
 public class ParkingSlotController {
 
-    //@Autowired
-    ParkingSlotService parkingSlotService;
+
+    private ParkingSlotService parkingSlotService = new ParkingSlotService();
+
 
     @PostMapping("/add")
     String addParkingSlot(@RequestBody ParkingSlot newParkingSlot) throws ExecutionException, InterruptedException {
@@ -46,6 +47,10 @@ public class ParkingSlotController {
             @RequestParam("location") String location
     ) throws ExecutionException, InterruptedException {
         return parkingSlotService.getSLotsByLocation(location);
+    }
+    @RequestMapping("getalllocations")
+    public List<String> getAllLocations() throws ExecutionException, InterruptedException {
+        return parkingSlotService.getlocationList();
     }
 
 }

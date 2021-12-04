@@ -11,7 +11,7 @@ import java.util.Map;
 public class Worker {
     @DocumentId
     public String workerID;
-    public int rating;
+    public double rating;
     public int noOfReviews =0;
     public Map<String, Double> amenities = Map.of("car cleaning", 560.0, "air pressure check", 69.0);
     public double ratePerHour;
@@ -27,17 +27,21 @@ public class Worker {
         }
         this.ratePerHour = ratePerHour;
     }
+    public Worker(){
+
+    }
 
 
 
-    public Worker(String workerID, int rating, Map<String, Double> amenities) {
+    public Worker(String workerID, double rating, int noOfReviews, Map<String, Double> amenities) {
         this.workerID = workerID;
         this.rating = rating;
+        this.noOfReviews =noOfReviews;
         this.amenities = amenities;
         setRatePerHour();
     }
 
-    public int getRating() {
+    public double getRating() {
         return rating;
     }
 
