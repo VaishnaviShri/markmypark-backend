@@ -14,7 +14,7 @@ public class FirebaseInitialize {
     @PostConstruct
     public void initalize(){
         try {
-            String path ="C:\\sem 3-1\\OOP\\project\\markmypark\\markmypark\\serviceAccountKey.json";
+            String path ="serviceAccountKey.json";
 
             FileInputStream serviceAccount =
                     new FileInputStream(path);
