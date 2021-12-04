@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-@Document(collectionName = "users")
+@Document(collectionName = "new_users")
 public class User {
 
     @DocumentId
