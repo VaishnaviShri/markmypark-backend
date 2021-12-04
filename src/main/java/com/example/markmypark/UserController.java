@@ -1,10 +1,8 @@
 package com.example.markmypark;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Date;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
@@ -38,14 +36,17 @@ public class UserController {
         return userService.getUser(uid);
     }
     @RequestMapping("/addbooking")
-    public User booker(@RequestParam int h,
-                       @RequestParam String userID,
+    public void booker(@RequestParam String userID,
                        @RequestParam String parkingSlotID,
+                       @RequestParam String dt,
                        @RequestParam int checkin,
                        @RequestParam int checkout,
                        @RequestParam Integer refno)
             throws ExecutionException, InterruptedException {
-        return userService.addUserBooking(h, userID, parkingSlotID, checkin, checkout, refno);
+        userService.addUserBooking(userID, parkingSlotID, checkin, checkout, refno);
+
+        ParkingSlotService parkingSlotService = new ParkingSlotService();
+        parkingSlotService.addParkingSlotBooking(userID, parkingSlotID, dt, checkin, checkout);
     }
 
 

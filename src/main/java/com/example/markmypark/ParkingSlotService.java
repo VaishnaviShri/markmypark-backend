@@ -88,16 +88,14 @@ public class ParkingSlotService {
     }
 
 
-    public void addParkingSlotBooking(int h, String userID, String parkingSlotID, String dt) throws ExecutionException, InterruptedException {
+    public void addParkingSlotBooking(String userID, String parkingSlotID, String dt, int checkin, int checkout) throws ExecutionException, InterruptedException {
 
         ParkingSlot obj = getSlotById(parkingSlotID);
-        obj.book(h, userID, dt);
+        obj.book(userID, dt, checkin, checkout);
         saveParkingSlot(obj);
-/*        for(ParkingSlot p_elt : p) {
-            if (p_elt.id.equals(parkingSlotID))
-                p_elt.book(h, userID, dt);
-        }*/
+
     }
+
     public List<String> getlocationList () throws ExecutionException, InterruptedException {
         List<ParkingSlot> allSlots = getAllSlots();
         List<String> locations = new ArrayList<>();

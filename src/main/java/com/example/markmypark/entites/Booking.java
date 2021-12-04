@@ -19,6 +19,8 @@ public class Booking {
         this.checkout = checkout;
     }
 
+    public Booking() {}
+
     public void setBillAmt(double b_amt) { this.billAmount = b_amt; }
 
     public int getRefNo() {

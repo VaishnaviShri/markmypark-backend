@@ -46,7 +46,7 @@ public class UserService {
 
     //TODO: function to update wallet
     //TODO: function to add booking object to a user with a particular id
-    public User addUserBooking(int h, String userID, String parkingSlotID, int checkin, int checkout, int refno) throws ExecutionException, InterruptedException {
+    public User addUserBooking(String userID, String parkingSlotID, int checkin, int checkout, int refno) throws ExecutionException, InterruptedException {
         User u_obj = getUser(userID);
         Booking book_obj = new Booking(refno, parkingSlotID, checkin, checkout);
         u_obj.book(book_obj);

@@ -17,7 +17,7 @@ public class ParkingSlot {
     public Worker worker = null;
     public double parkingRatePerHour;
     public double totalPrice;
-    public ArrayList<DayBooking> allBookings = new ArrayList<>();
+    public ArrayList<DayBooking> allBookings = new ArrayList<DayBooking>();
 
     public double getTotalPrice() {
         return totalPrice;
@@ -28,10 +28,11 @@ public class ParkingSlot {
         this.totalPrice = parkingRatePerHour + Objects.requireNonNull(worker).getRatePerHour();
     }
 
-    public void book(int h, String userID, String dt) {
+    public void book(String userID, String dt, int checkin, int checkout) {
         for(DayBooking dbook : this.allBookings) {
             if(dbook.date.equals(dt))
-                dbook.setHour(h, userID);
+                for(int i = checkin; i < checkout; i++)
+                    dbook.setHour(i, userID);
         }
     }
 
