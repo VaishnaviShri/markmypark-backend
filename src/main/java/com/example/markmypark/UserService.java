@@ -12,6 +12,9 @@ import java.util.concurrent.ExecutionException;
 
 @Service
 public class UserService {
+    UserService(){
+
+    }
     Firestore dbFirestore = FirestoreClient.getFirestore();
 
     public String saveUserDetails(User user) throws ExecutionException, InterruptedException {
