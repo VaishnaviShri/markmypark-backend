@@ -8,7 +8,7 @@ import org.springframework.cloud.gcp.data.firestore.Document;
 import java.util.List;
 
 
-@Document(collectionName = "users")
+@Document(collectionName = "new_users")
 public class User {
 
     @DocumentId
