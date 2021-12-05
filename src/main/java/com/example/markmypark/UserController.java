@@ -44,10 +44,12 @@ public class UserController {
                        @RequestParam int checkout,
                        @RequestParam Integer refno)
             throws ExecutionException, InterruptedException {
-        userService.addUserBooking(userID, parkingSlotID, checkin, checkout, refno);
 
         ParkingSlotService parkingSlotService = new ParkingSlotService();
-        parkingSlotService.addParkingSlotBooking(userID, parkingSlotID, dt, checkin, checkout);
+        int pSlotBookStatus = parkingSlotService.addParkingSlotBooking(userID, parkingSlotID, dt, checkin, checkout);
+
+        if(pSlotBookStatus == 1)
+            userService.addUserBooking(userID, parkingSlotID, checkin, checkout, refno);
     }
 
     @RequestMapping("/updateuserdetails")

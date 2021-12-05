@@ -48,16 +48,18 @@ public class ParkingSlotService {
     public List<ParkingSlot> filterListAtLocation(List<ParkingSlot> allSlots, String date, int checkIn, int checkOut) {
         List<ParkingSlot> match = new ArrayList<>();
         for (ParkingSlot obj : allSlots) {
-
             for (DayBooking db : obj.allBookings) {
                 if (db.date.equals(date)) {
+
                     int flag = 0;
-                    for (int i = checkIn; i <= checkOut; i++) {
-                        if (db.usersList.get(i) != null) {
+
+                    for (int i = checkIn; i < checkOut; i++) {
+                        if (db.getUsersListHour(i) != null) {
                             flag = 1;
                             break;
                         }
                     }
+
                     if (flag == 0)
                         match.add(obj);
                 }
@@ -73,7 +75,7 @@ public class ParkingSlotService {
                 .whereEqualTo("location", location)
                 .get();
         List<QueryDocumentSnapshot> documents = future.get().getDocuments();
-        List<ParkingSlot> allParkingSlots = new ArrayList<ParkingSlot>();//List.of(new ParkingSlot[]{new ParkingSlot("","",0)});
+        List<ParkingSlot> allParkingSlots = new ArrayList<>();//List.of(new ParkingSlot[]{new ParkingSlot("","",0)});
         for (QueryDocumentSnapshot document : documents) {
             allParkingSlots.add(document.toObject(ParkingSlot.class));
         }
@@ -88,11 +90,16 @@ public class ParkingSlotService {
     }
 
 
-    public void addParkingSlotBooking(String userID, String parkingSlotID, String dt, int checkin, int checkout) throws ExecutionException, InterruptedException {
+    public int addParkingSlotBooking(String userID, String parkingSlotID, String dt, int checkin, int checkout) throws ExecutionException, InterruptedException {
 
         ParkingSlot obj = getSlotById(parkingSlotID);
-        obj.book(userID, dt, checkin, checkout);
-        saveParkingSlot(obj);
+        int bookstatus = obj.book(userID, dt, checkin, checkout);
+
+        if(bookstatus == 1)
+            saveParkingSlot(obj);
+
+        return bookstatus;
+        //return obj;
 
     }
 
