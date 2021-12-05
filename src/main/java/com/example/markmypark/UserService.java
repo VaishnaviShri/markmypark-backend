@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.ExecutionException;
 
 @Service
@@ -42,6 +43,21 @@ public class UserService {
             System.out.println("No such document!");
         }
         return user;
+    }
+    // first name, last name, mo no and address
+
+    public String updateUser(String uid, String firstName, String lastName, String mobNo, String address) throws ExecutionException, InterruptedException {
+        User user = getUser(uid);
+        if(!Objects.equals(firstName, ""))
+            user.first_name =firstName;
+        if(!Objects.equals(lastName, ""))
+            user.last_name=lastName;
+        if(!Objects.equals(mobNo, ""))
+            user.mob_no=mobNo;
+        if(!Objects.equals(address, ""))
+            user.address=address;
+
+        return saveUserDetails(user);
     }
 
     //TODO: function to update wallet

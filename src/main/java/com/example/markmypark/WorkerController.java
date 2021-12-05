@@ -29,7 +29,7 @@ public class WorkerController {
         return workerService.getWorker(id);
     }
 
-    @RequestMapping("getServicesTotal")
+    @RequestMapping("/getServicesTotal")
     public double getServicesTotal(
             @RequestParam String id
     ) throws ExecutionException, InterruptedException {
