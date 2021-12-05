@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.ExecutionException;
 
 
@@ -49,6 +50,32 @@ public class UserController {
 
         if(pSlotBookStatus == 1)
             userService.addUserBooking(userID, parkingSlotID, checkin, checkout, refno);
+    }
+
+    @RequestMapping("/updateuserdetails")
+    public String updateUserDetails(
+            @RequestParam String uid,
+            @RequestParam String first_name,
+            @RequestParam String last_name,
+            @RequestParam String mob_no,
+            @RequestParam String address
+
+    ){
+        return updateUserDetails(uid, first_name, last_name, mob_no, address);
+    }
+    @RequestMapping("/updateuser")
+    public String updateUser(@RequestBody User updateUser) throws ExecutionException, InterruptedException {
+        User oldUser = userService.getUser(updateUser.uid);
+        if(!Objects.equals(updateUser.first_name, ""))
+            oldUser.first_name =updateUser.first_name;
+        if(!Objects.equals(updateUser.last_name, ""))
+            oldUser.last_name=updateUser.last_name;
+        if(!Objects.equals(updateUser.mob_no, ""))
+            oldUser.mob_no=updateUser.mob_no;
+        if(!Objects.equals(updateUser, ""))
+            oldUser.address=updateUser.address;
+
+        return userService.saveUserDetails(oldUser);
     }
 
 

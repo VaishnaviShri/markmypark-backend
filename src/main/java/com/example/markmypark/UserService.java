@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.ExecutionException;
 
 @Service
@@ -17,13 +18,13 @@ public class UserService {
     Firestore dbFirestore = FirestoreClient.getFirestore();
 
     public String saveUserDetails(User user) throws ExecutionException, InterruptedException {
-        ApiFuture<WriteResult> collectionsApiFuture = dbFirestore.collection("new_users").document(user.uid).set(user);
+        ApiFuture<WriteResult> collectionsApiFuture = dbFirestore.collection("users").document(user.uid).set(user);
         return collectionsApiFuture.get().getUpdateTime().toString();
     }
     public List<User> getAllUsers() throws ExecutionException, InterruptedException {
 
         List<User> usersList = new ArrayList<>();
-        ApiFuture<QuerySnapshot> future = dbFirestore.collection("new_users").get();
+        ApiFuture<QuerySnapshot> future = dbFirestore.collection("users").get();
         List<QueryDocumentSnapshot> documents = future.get().getDocuments();
         for (QueryDocumentSnapshot document : documents) {
            usersList.add(document.toObject(User.class));
@@ -32,7 +33,7 @@ public class UserService {
 
     }
     public User getUser(String id) throws ExecutionException, InterruptedException {
-        DocumentReference docRef = dbFirestore.collection("new_users").document(id);
+        DocumentReference docRef = dbFirestore.collection("users").document(id);
         ApiFuture<DocumentSnapshot> future = docRef.get();
         DocumentSnapshot document = future.get();
         User user = new User();
@@ -42,6 +43,21 @@ public class UserService {
             System.out.println("No such document!");
         }
         return user;
+    }
+    // first name, last name, mo no and address
+
+    public String updateUser(String uid, String firstName, String lastName, String mobNo, String address) throws ExecutionException, InterruptedException {
+        User user = getUser(uid);
+        if(!Objects.equals(firstName, ""))
+            user.first_name =firstName;
+        if(!Objects.equals(lastName, ""))
+            user.last_name=lastName;
+        if(!Objects.equals(mobNo, ""))
+            user.mob_no=mobNo;
+        if(!Objects.equals(address, ""))
+            user.address=address;
+
+        return saveUserDetails(user);
     }
 
     //TODO: function to update wallet
