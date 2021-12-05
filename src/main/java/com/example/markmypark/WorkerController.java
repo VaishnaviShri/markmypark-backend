@@ -29,6 +29,13 @@ public class WorkerController {
         return workerService.getWorker(id);
     }
 
+    @RequestMapping("getServicesTotal")
+    public double getServicesTotal(
+            @RequestParam String id
+    ) throws ExecutionException, InterruptedException {
+        return workerService.getWorker(id).getRatePerHour();
+    }
+
     //TODO: function to update worker rating with new average
 
 

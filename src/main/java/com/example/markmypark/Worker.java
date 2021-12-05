@@ -4,7 +4,8 @@ import com.google.cloud.firestore.annotation.DocumentId;
 import org.springframework.cloud.gcp.data.firestore.Document;
 
 
-
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 @Document(collectionName = "workers")
@@ -13,7 +14,7 @@ public class Worker {
     public String workerID;
     public double rating;
     public int noOfReviews =0;
-    public Map<String, Double> amenities = Map.of("car cleaning", 560.0, "air pressure check", 69.0);
+    public List<String> amenities = new ArrayList<>();
     public double ratePerHour;
 
     public double getRatePerHour() {
@@ -21,10 +22,10 @@ public class Worker {
     }
 
     public void setRatePerHour() {
-        int ratePerHour =0;
-        for(double price : amenities.values()){
+        int ratePerHour = amenities.size() * 50; // each service costs Rs. 50
+        /*for(double price : amenities.values()){
             ratePerHour +=price;
-        }
+        }*/
         this.ratePerHour = ratePerHour;
     }
     public Worker(){
@@ -33,7 +34,7 @@ public class Worker {
 
 
 
-    public Worker(String workerID, double rating, int noOfReviews, Map<String, Double> amenities) {
+    public Worker(String workerID, double rating, int noOfReviews, List<String> amenities) {
         this.workerID = workerID;
         this.rating = rating;
         this.noOfReviews =noOfReviews;
@@ -49,11 +50,4 @@ public class Worker {
         this.rating = rating;
     }
 
-    public Map<String, Double> getAmenities() {
-        return amenities;
-    }
-
-    public void setAmenities(Map<String, Double> amenities) {
-        this.amenities = amenities;
-    }
 }
