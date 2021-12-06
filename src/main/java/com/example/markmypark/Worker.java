@@ -12,6 +12,7 @@ import java.util.Map;
 public class Worker {
     @DocumentId
     public String workerID;
+    public String workerName;
     public double rating;
     public int noOfReviews =0;
     public List<String> amenities = new ArrayList<>();

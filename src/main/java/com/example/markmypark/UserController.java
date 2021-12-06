@@ -66,13 +66,13 @@ public class UserController {
     @RequestMapping("/updateuser")
     public String updateUser(@RequestBody User updateUser) throws ExecutionException, InterruptedException {
         User oldUser = userService.getUser(updateUser.uid);
-        if(!Objects.equals(updateUser.first_name, ""))
+        if(!Objects.equals(updateUser.first_name, "") && updateUser.first_name!=null)
             oldUser.first_name = updateUser.first_name;
-        if(!Objects.equals(updateUser.last_name, ""))
+        if(!Objects.equals(updateUser.last_name, "") && updateUser.last_name!=null )
             oldUser.last_name = updateUser.last_name;
-        if(!Objects.equals(updateUser.mob_no, ""))
+        if(!Objects.equals(updateUser.mob_no, "") && updateUser.mob_no!=null)
             oldUser.mob_no = updateUser.mob_no;
-        if(!Objects.equals(updateUser, ""))
+        if(!Objects.equals(updateUser.address, "")&& updateUser.address!=null)
             oldUser.address = updateUser.address;
 
         return userService.saveUserDetails(oldUser);
