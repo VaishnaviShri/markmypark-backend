@@ -14,9 +14,9 @@ public class EmailConfig {
     public JavaMailSender getJavaMailSender() {
         JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
         mailSender.setHost("smtp.gmail.com");
-        mailSender.setPort(587);
+        mailSender.setPort(587); //587-tls, 465-ssl
         mailSender.setUsername("markmyparkmmp@gmail.com");
-        mailSender.setPassword("vvogrsmdwtpprmzu");
+        mailSender.setPassword("pdoispddaixfoyln");
 
         Properties p = mailSender.getJavaMailProperties();
         p.put("mail.transport.protocol", "smtp");
@@ -29,13 +29,13 @@ public class EmailConfig {
     }
 
     //@Bean
-    public void defMailSender(String userEmail, String promo) {
+    public void defMailSender(String userEmail, String subj, String txt) {
 
         SimpleMailMessage message = new SimpleMailMessage();
         message.setTo(userEmail);
         message.setFrom("markmyparkmmp@gmail.com");
-        message.setSubject("You have got a promocode from MMP");
-        message.setText("Thanks for booking with us frequently.\nHere is your promocode for future bookings: ".concat(promo));
+        message.setSubject(subj);
+        message.setText(txt);
         getJavaMailSender().send(message);
     }
 }

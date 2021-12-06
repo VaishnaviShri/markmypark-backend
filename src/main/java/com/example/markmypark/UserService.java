@@ -27,7 +27,7 @@ public class UserService {
         ApiFuture<QuerySnapshot> future = dbFirestore.collection("new_users").get();
         List<QueryDocumentSnapshot> documents = future.get().getDocuments();
         for (QueryDocumentSnapshot document : documents) {
-           usersList.add(document.toObject(User.class));
+            usersList.add(document.toObject(User.class));
         }
         return usersList;
 
@@ -65,11 +65,26 @@ public class UserService {
     public User addUserBooking(String userID, String parkingSlotID, String date, int checkin, int checkout, int refno) throws ExecutionException, InterruptedException {
         User u_obj = getUser(userID);
         Booking book_obj = new Booking(refno, parkingSlotID, date, checkin, checkout);
-        book_obj.setBillAmount((checkout - checkin) * new ParkingSlotService().getSlotById(parkingSlotID).getParkingRatePerHour());
+        ParkingSlot pslot_obj = new ParkingSlotService().getSlotById(parkingSlotID);
+        double b_amt = (checkout - checkin) * pslot_obj.getParkingRatePerHour();
+        book_obj.setBillAmount(b_amt);
         u_obj.book(book_obj);
         u_obj.minAmtDeduction();
 
         saveUserDetails(u_obj);
+
+        String txt = "Dear User,\nThanks for booking with MMP.\n Your booking details are:-\n"
+                     .concat("\nBooking Reference Number: ").concat(Integer.toString(refno))
+                     .concat("\nLocation: ").concat(pslot_obj.location)
+                     .concat("\nDate: ").concat(date)
+                     .concat("\nCheck In: ").concat(Integer.toString(checkin)).concat(":00")
+                     .concat("\nCheck Out: ").concat(Integer.toString(checkout)).concat(":00")
+                     .concat("\nRate Per Hour: ").concat(Double.toString(pslot_obj.getParkingRatePerHour()))
+                     .concat("\nBill Amount: ").concat(Double.toString(b_amt));
+
+        String subj = "MMP Booking ".concat(Integer.toString(refno));
+
+        new EmailConfig().defMailSender(u_obj.email, subj, txt);
 
         return u_obj;
     }
@@ -77,9 +92,10 @@ public class UserService {
     public void checkout(String userID, String parkingSlotID, int refno) throws ExecutionException, InterruptedException {
         User u_obj = getUser(userID);
         ParkingSlot parkingSlot = new ParkingSlotService().getSlotById(parkingSlotID);
-
+        Booking b_obj = new Booking();
         for(Booking b : u_obj.bookingList) {
             if(b.getRefNo() == refno) {
+                b_obj = b;
                 parkingSlot.pSlotRelease(userID, b.date, b.getCheckin(), b.getCheckout());
                 u_obj.updateWallet(-(b.getBillAmount() - 100));
             }
@@ -87,12 +103,28 @@ public class UserService {
 
         saveUserDetails(u_obj);
         new ParkingSlotService().saveParkingSlot(parkingSlot);
+
+        String txt = "Dear User,\nYou have checked out of MMP Parking Slot ".concat(parkingSlotID)
+                     .concat(".\nYour Bill Details are:-\nWallet Balance: ").concat(Double.toString(u_obj.wallet))
+                     .concat("\nBooking Reference Number: ").concat(Integer.toString(b_obj.getRefNo()))
+                     .concat("\nDate: ").concat(b_obj.date)
+                     .concat("\nCheck In: ").concat(Integer.toString(b_obj.checkin)).concat(":00")
+                     .concat("\nCheck Out: ").concat(Integer.toString(b_obj.checkout)).concat(":00")
+                     .concat("\nRate Per Hour: ").concat(Double.toString(parkingSlot.parkingRatePerHour))
+                     .concat("\nBill Amount: ").concat(Double.toString(b_obj.billAmount));
+
+        String subj = "MMP Checkout ".concat(Integer.toString(b_obj.getRefNo()));
+
+        new EmailConfig().defMailSender(u_obj.email, subj, txt);
     }
 
     public void promocode_check(String userID) throws ExecutionException, InterruptedException {
         User u_obj = getUser(userID);
         if (u_obj.bookingList.size() >= 5) {
-            new EmailConfig().defMailSender(u_obj.email, "get10offmmp");
+            String subj = "You have got a promocode from MMP";
+            String promo = "get10off";
+            String txt = "Thanks for booking with us frequently.\nHere is your promocode for future bookings: ".concat(promo);
+            new EmailConfig().defMailSender(u_obj.email, subj, txt);
         }
     }
 
