@@ -1,6 +1,7 @@
 package com.example.markmypark;
 
 
+import com.example.markmypark.config.EmailConfig;
 import com.example.markmypark.entites.Booking;
 import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.*;
@@ -86,6 +87,13 @@ public class UserService {
 
         saveUserDetails(u_obj);
         new ParkingSlotService().saveParkingSlot(parkingSlot);
+    }
+
+    public void promocode_check(String userID) throws ExecutionException, InterruptedException {
+        User u_obj = getUser(userID);
+        if (u_obj.bookingList.size() >= 5) {
+            new EmailConfig().defMailSender(u_obj.email, "get10offmmp");
+        }
     }
 
 }

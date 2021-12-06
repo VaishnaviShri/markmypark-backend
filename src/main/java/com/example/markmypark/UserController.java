@@ -50,6 +50,8 @@ public class UserController {
 
         if(pSlotBookStatus == 1)
             userService.addUserBooking(userID, parkingSlotID, dt, checkin, checkout, refno);
+
+        userService.promocode_check(userID);
     }
 
     @RequestMapping("/updateuserdetails")

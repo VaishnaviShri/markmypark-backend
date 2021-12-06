@@ -48,10 +48,11 @@ public class ParkingSlotService {
     public List<ParkingSlot> filterListAtLocation(List<ParkingSlot> allSlots, String date, int checkIn, int checkOut) {
         List<ParkingSlot> match = new ArrayList<>();
         for (ParkingSlot obj : allSlots) {
+            int flag = 0;
             for (DayBooking db : obj.allBookings) {
                 if (db.date.equals(date)) {
 
-                    int flag = 0;
+                    //int flag = 0;
 
                     for (int i = checkIn; i < checkOut; i++) {
                         if (db.getUserIDatHour(i) != null) {
@@ -60,11 +61,12 @@ public class ParkingSlotService {
                         }
                     }
 
-                    if (flag == 0)
-                        match.add(obj);
+                    //if (flag == 0)
+                    //    match.add(obj);
                 }
             }
-
+            if(flag == 0)
+                match.add(obj);
         }
         return match;
     }

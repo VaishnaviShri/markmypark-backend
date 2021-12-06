@@ -56,9 +56,7 @@ public class User {
         this.wallet += amt;
     }
 
-
     public User() {}
-
 
 }
 
