@@ -54,7 +54,7 @@ public class ParkingSlotService {
                     int flag = 0;
 
                     for (int i = checkIn; i < checkOut; i++) {
-                        if (db.getUsersListHour(i) != null) {
+                        if (db.getUserIDatHour(i) != null) {
                             flag = 1;
                             break;
                         }

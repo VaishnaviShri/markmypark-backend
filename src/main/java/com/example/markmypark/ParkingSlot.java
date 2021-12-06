@@ -23,6 +23,10 @@ public class ParkingSlot {
         return totalPrice;
     }
 
+    public double getParkingRatePerHour() {
+        return parkingRatePerHour;
+    }
+
     WorkerService workerService = new WorkerService();
     public void setTotalPrice() {
         this.totalPrice = parkingRatePerHour + Objects.requireNonNull(worker).getRatePerHour();
@@ -44,7 +48,7 @@ public class ParkingSlot {
                 if(dbook.date.equals(dt)) {                     //object for that date exists in the list
                     found = 1;
                     for(int i = checkin; i < checkout; i++)
-                        if(dbook.getUsersListHour(i) == null)
+                        if(dbook.getUserIDatHour(i) == null)
                             dbook.setHour(i, userID);
                         else
                             return 0;                           //booking unsuccessful as there was already an existing booking b/w checkin and checkout time
@@ -64,6 +68,17 @@ public class ParkingSlot {
         }
 
         return 1;       //booking successful
+    }
+
+    public void pSlotRelease(String userID, String dt, int checkin, int checkout) {
+        for(DayBooking dbook : this.allBookings) {
+            if(dbook.date.equals(dt)) {
+                for(int i = checkin; i< checkout; i++) {
+                    if(dbook.getUserIDatHour(i).equals(userID))
+                        dbook.setHour(i, null);
+                }
+            }
+        }
     }
 
     public ParkingSlot() {

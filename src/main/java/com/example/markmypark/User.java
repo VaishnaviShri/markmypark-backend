@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-@Document(collectionName = "users")
+@Document(collectionName = "new_users")
 public class User {
 
     @DocumentId
@@ -26,7 +26,7 @@ public class User {
     public String car_reg_no;
     public String userType;
     public double wallet = 0.0;
-    public List<Booking> bookingList = new ArrayList<Booking>();
+    public List<Booking> bookingList = new ArrayList<>();
 
     public User(String uid, String email, String displayName, String photoURL, Boolean emailVerified, String first_name, String last_name, String user_name, String address, String mob_no, String car_reg_no, String userType, double wallet) {
         this.uid = uid;
@@ -48,6 +48,13 @@ public class User {
         this.bookingList.add(b);
     }
 
+    public void minAmtDeduction() {
+        this.wallet -= 100;
+    }
+
+    public void updateWallet(double amt) {
+        this.wallet += amt;
+    }
 
 
     public User() {}

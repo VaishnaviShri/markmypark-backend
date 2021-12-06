@@ -6,22 +6,22 @@ public class Booking {
 
     @Id
     public int bookingID;
+    public String date;
     public int refNo;
     public String pSlotID;
     public int checkin;
     public int checkout;
     public double billAmount;
 
-    public Booking(int refNo, String pSlotID, int checkin, int checkout) {
+    public Booking(int refNo, String pSlotID, String date, int checkin, int checkout) {
         this.refNo = refNo;
         this.pSlotID = pSlotID;
+        this.date = date;
         this.checkin = checkin;
         this.checkout = checkout;
     }
 
     public Booking() {}
-
-    public void setBillAmt(double b_amt) { this.billAmount = b_amt; }
 
     public int getRefNo() {
         return refNo;
@@ -31,7 +31,7 @@ public class Booking {
         this.refNo = refNo;
     }
 
-    public String getSlotID() {
+    public String getpSlotID() {
         return pSlotID;
     }
 

@@ -49,7 +49,7 @@ public class UserController {
         int pSlotBookStatus = parkingSlotService.addParkingSlotBooking(userID, parkingSlotID, dt, checkin, checkout);
 
         if(pSlotBookStatus == 1)
-            userService.addUserBooking(userID, parkingSlotID, checkin, checkout, refno);
+            userService.addUserBooking(userID, parkingSlotID, dt, checkin, checkout, refno);
     }
 
     @RequestMapping("/updateuserdetails")
@@ -67,25 +67,19 @@ public class UserController {
     public String updateUser(@RequestBody User updateUser) throws ExecutionException, InterruptedException {
         User oldUser = userService.getUser(updateUser.uid);
         if(!Objects.equals(updateUser.first_name, ""))
-            oldUser.first_name =updateUser.first_name;
+            oldUser.first_name = updateUser.first_name;
         if(!Objects.equals(updateUser.last_name, ""))
-            oldUser.last_name=updateUser.last_name;
+            oldUser.last_name = updateUser.last_name;
         if(!Objects.equals(updateUser.mob_no, ""))
-            oldUser.mob_no=updateUser.mob_no;
+            oldUser.mob_no = updateUser.mob_no;
         if(!Objects.equals(updateUser, ""))
-            oldUser.address=updateUser.address;
+            oldUser.address = updateUser.address;
 
         return userService.saveUserDetails(oldUser);
     }
 
-
-    /*
-
-
-
-    @PostMapping("/add")
-    public User newUser(@RequestBody User newUser){
-       return userRepository.save(newUser).block();
-   }
-*/
+    @RequestMapping("/checkout")
+    public void check_out(@RequestParam String userID, @RequestParam String parkingSlotID, @RequestParam int refno) throws ExecutionException, InterruptedException {
+        userService.checkout(userID, parkingSlotID, refno);
+    }
 }
