@@ -29,10 +29,10 @@ public class ParkingSlotController {
     public List<ParkingSlot> filterParkingSlots(
             @RequestParam("location") String location,
             @RequestParam("date") String date,
-            @RequestParam("check_in") int checkIn,
-            @RequestParam("check_out") int checkOut) throws ExecutionException, InterruptedException {
+            @RequestParam("check_in") String checkIn,
+            @RequestParam("check_out") String checkOut) throws ExecutionException, InterruptedException {
 
-     return parkingSlotService.getFilteredSlots(location, date, checkIn, checkOut);
+     return parkingSlotService.getFilteredSlots(location, date, Integer.parseInt(checkIn), Integer.parseInt(checkOut));
     }
 
     @RequestMapping("/getbyid")
