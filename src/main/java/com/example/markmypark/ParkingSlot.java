@@ -14,6 +14,7 @@ public class ParkingSlot {
     @DocumentId
     public String id;
     public String location;
+    public String workerID ="worker1";
     public Worker worker = null;
     public double parkingRatePerHour;
     public double totalPrice;
@@ -81,8 +82,12 @@ public class ParkingSlot {
         }
     }
 
-    public ParkingSlot() {
+    public void setWorker() throws ExecutionException, InterruptedException {
+        this.worker = workerService.getWorker(workerID);
+    }
 
+    public ParkingSlot() throws ExecutionException, InterruptedException {
+        setWorker();
     }
 
     public ParkingSlot(String location, String workerID, double parkingRatePerHour) throws ExecutionException, InterruptedException {

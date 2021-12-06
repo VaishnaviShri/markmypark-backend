@@ -16,6 +16,7 @@ public class ParkingSlotController {
 
     @PostMapping("/add")
     String addParkingSlot(@RequestBody ParkingSlot newParkingSlot) throws ExecutionException, InterruptedException {
+        newParkingSlot.setWorker();
         return parkingSlotService.saveParkingSlot(newParkingSlot);
     }
 
