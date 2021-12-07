@@ -63,8 +63,6 @@ public class UserService {
         return saveUserDetails(user);
     }
 
-    //TODO: function to update wallet
-    //TODO: function to add booking object to a user with a particular id
     public User addUserBooking(String userID, String parkingSlotID, String date, int checkin, int checkout, int refno) throws ExecutionException, InterruptedException {
         User u_obj = getUser(userID);
         Booking book_obj = new Booking(refno, parkingSlotID, date, checkin, checkout);

@@ -28,15 +28,15 @@ public class UserController {
         //return "post ka message";
         return userService.saveUserDetails(user);
     }
-    @RequestMapping("/getall")
+    @GetMapping("/getall")
     public List<User> getAllUsers() throws ExecutionException, InterruptedException {
         return userService.getAllUsers();
     }
-    @RequestMapping("/getUser")
+    @GetMapping("/getUser")
     public User getUser(@RequestParam String uid) throws ExecutionException, InterruptedException {
         return userService.getUser(uid);
     }
-    @RequestMapping("/addbooking")
+    @PostMapping("/addbooking")
     public void booker(@RequestParam String userID,
                        @RequestParam String parkingSlotID,
                        @RequestParam String dt,

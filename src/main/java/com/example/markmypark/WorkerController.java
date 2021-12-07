@@ -17,25 +17,25 @@ public class WorkerController {
         return workerService.saveWorker(newWorker);
     }
 
-    @RequestMapping("/delete")
+    @DeleteMapping("/delete")
     String deleteWorker(
             @RequestParam String workerID) throws ExecutionException, InterruptedException {
         return workerService.deleteWorker(workerID).toString();
     }
 
-    @RequestMapping("/getall")
+    @GetMapping("/getall")
     public List<Worker> getAllWorkers() throws ExecutionException, InterruptedException {
         return  workerService.getAllWorkers();
     }
 
-    @RequestMapping("/getbyid")
+    @GetMapping("/getbyid")
     public Worker getWorkerById(
             @RequestParam String id
     ) throws ExecutionException, InterruptedException {
         return workerService.getWorker(id);
     }
 
-    @RequestMapping("/getServicesTotal")
+    @GetMapping("/getServicesTotal")
     public double getServicesTotal(
             @RequestParam String id
     ) throws ExecutionException, InterruptedException {

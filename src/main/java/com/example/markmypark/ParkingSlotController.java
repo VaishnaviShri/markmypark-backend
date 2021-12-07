@@ -20,12 +20,12 @@ public class ParkingSlotController {
         return parkingSlotService.saveParkingSlot(newParkingSlot);
     }
 
-    @RequestMapping("/getall")
+    @GetMapping("/getall")
     public List<ParkingSlot> getAllParkingSlots() throws ExecutionException, InterruptedException {
         return (List<ParkingSlot>) parkingSlotService.getAllSlots();
     }
 
-    @RequestMapping("/filter")
+    @GetMapping("/filter")
     public List<ParkingSlot> filterParkingSlots(
             @RequestParam("location") String location,
             @RequestParam("date") String date,
@@ -35,7 +35,7 @@ public class ParkingSlotController {
      return parkingSlotService.getFilteredSlots(location, date, Integer.parseInt(checkIn), Integer.parseInt(checkOut));
     }
 
-    @RequestMapping("/getbyid")
+    @GetMapping("/getbyid")
     public ParkingSlot getSlotById(
             @RequestParam("id") String id
     ) throws ExecutionException, InterruptedException {
@@ -43,13 +43,13 @@ public class ParkingSlotController {
     }
 
     //when no matching slots found display all the slots for the searched location
-    @RequestMapping("/getbylocation")
+    @GetMapping("/getbylocation")
     public List<ParkingSlot> getSlotsByLocation(
             @RequestParam("location") String location
     ) throws ExecutionException, InterruptedException {
         return parkingSlotService.getSLotsByLocation(location);
     }
-    @RequestMapping("getalllocations")
+    @GetMapping("getalllocations")
     public List<String> getAllLocations() throws ExecutionException, InterruptedException {
         return parkingSlotService.getlocationList();
     }
