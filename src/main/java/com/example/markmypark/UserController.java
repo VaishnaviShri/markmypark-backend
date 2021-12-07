@@ -54,6 +54,13 @@ public class UserController {
         userService.promocode_check(userID);
     }
 
+    @PutMapping("/addMoney")
+    public void addMoney(@RequestParam double amount, @RequestParam String userID) throws ExecutionException, InterruptedException {
+        User u_obj = userService.getUser(userID);
+        u_obj.updateWallet(amount);
+        userService.saveUserDetails(u_obj);
+    }
+
     @RequestMapping("/updateuserdetails")
     public String updateUserDetails(
             @RequestParam String uid,
