@@ -12,6 +12,7 @@ public class Booking {
     public int checkin;
     public int checkout;
     public double billAmount;
+    public boolean checkedout = false;
 
     public Booking(int refNo, String pSlotID, String date, int checkin, int checkout) {
         this.refNo = refNo;

@@ -8,6 +8,9 @@ import com.google.cloud.firestore.*;
 import com.google.firebase.cloud.FirestoreClient;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -89,22 +92,72 @@ public class UserService {
         return u_obj;
     }
 
+    //test
+    public String getCurrentHour() {
+        LocalDateTime dateTime = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH");
+        String dthour = dateTime.format(formatter);
+
+        return dthour;
+    }
+
+    //test
+/*    public void checkout() throws ExecutionException, InterruptedException {
+        //User u_obj;
+        //ParkingSlot p_obj;
+        //Booking b_obj;
+
+        int u = 0;
+
+        for(User u_obj : getAllUsers()) {
+            int b = 0;
+            for(Booking b_obj : u_obj.bookingList) {
+                if(!b_obj.checkedout && getCurrentHour().substring(0, 10).equals(b_obj.date) && getCurrentHour().substring(11, 13).equals(Integer.toString(b_obj.getCheckout()))) {
+                    ParkingSlot p_obj = new ParkingSlotService().getSlotById(b_obj.getpSlotID());
+                    p_obj.pSlotRelease(u_obj.uid, b_obj.date, b_obj.getCheckin(), b_obj.getCheckout());
+                    u_obj.updateWallet(-(b_obj.getBillAmount() - 100));
+                    b_obj.checkedout = true;
+                    new ParkingSlotService().saveParkingSlot(parkingSlot);
+
+                }
+                b++;
+            }
+            u++;
+        }
+    }*/
+
+    //original
     public void checkout(String userID, String parkingSlotID, int refno) throws ExecutionException, InterruptedException {
         User u_obj = getUser(userID);
         ParkingSlot parkingSlot = new ParkingSlotService().getSlotById(parkingSlotID);
-        Booking b_obj = new Booking();
         for(Booking b : u_obj.bookingList) {
-            if(b.getRefNo() == refno) {
-                b_obj = b;
+            if(!b.checkedout && b.getRefNo() == refno) {
                 parkingSlot.pSlotRelease(userID, b.date, b.getCheckin(), b.getCheckout());
                 u_obj.updateWallet(-(b.getBillAmount() - 100));
+                b.checkedout = true;
+                saveUserDetails(u_obj);
+
+                new ParkingSlotService().saveParkingSlot(parkingSlot);
+
+                String txt = "Dear User,\nYou have checked out of MMP Parking Slot ".concat(parkingSlotID)
+                        .concat(".\nYour Bill Details are:-\nWallet Balance: ").concat(Double.toString(u_obj.wallet))
+                        .concat("\nBooking Reference Number: ").concat(Integer.toString(b.getRefNo()))
+                        .concat("\nDate: ").concat(b.date)
+                        .concat("\nCheck In: ").concat(Integer.toString(b.checkin)).concat(":00")
+                        .concat("\nCheck Out: ").concat(Integer.toString(b.checkout)).concat(":00")
+                        .concat("\nRate Per Hour: ").concat(Double.toString(parkingSlot.parkingRatePerHour))
+                        .concat("\nBill Amount: ").concat(Double.toString(b.billAmount));
+
+                String subj = "MMP Checkout ".concat(Integer.toString(b.getRefNo()));
+
+                new EmailConfig().defMailSender(u_obj.email, subj, txt);
             }
         }
 
-        saveUserDetails(u_obj);
-        new ParkingSlotService().saveParkingSlot(parkingSlot);
+        //saveUserDetails(u_obj);
+        //new ParkingSlotService().saveParkingSlot(parkingSlot);
 
-        String txt = "Dear User,\nYou have checked out of MMP Parking Slot ".concat(parkingSlotID)
+        /*String txt = "Dear User,\nYou have checked out of MMP Parking Slot ".concat(parkingSlotID)
                      .concat(".\nYour Bill Details are:-\nWallet Balance: ").concat(Double.toString(u_obj.wallet))
                      .concat("\nBooking Reference Number: ").concat(Integer.toString(b_obj.getRefNo()))
                      .concat("\nDate: ").concat(b_obj.date)
@@ -115,7 +168,7 @@ public class UserService {
 
         String subj = "MMP Checkout ".concat(Integer.toString(b_obj.getRefNo()));
 
-        new EmailConfig().defMailSender(u_obj.email, subj, txt);
+        new EmailConfig().defMailSender(u_obj.email, subj, txt);*/
     }
 
     public void promocode_check(String userID) throws ExecutionException, InterruptedException {
