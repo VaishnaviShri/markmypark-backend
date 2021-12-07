@@ -47,4 +47,8 @@ public class WorkerService {
         }
         return worker;
     }
+    public void updateRating(String id, double newRating) throws ExecutionException, InterruptedException {
+        DocumentReference docRef = dbFirestore.collection("workers").document(id);
+        ApiFuture<WriteResult> future = docRef.update("rating", newRating);
+    }
 }
