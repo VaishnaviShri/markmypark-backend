@@ -6,6 +6,7 @@ import com.example.markmypark.entites.Booking;
 import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.*;
 import com.google.firebase.cloud.FirestoreClient;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -75,13 +76,13 @@ public class UserService {
         saveUserDetails(u_obj);
 
         String txt = "Dear User,\nThanks for booking with MMP.\n Your booking details are:-\n"
-                     .concat("\nBooking Reference Number: ").concat(Integer.toString(refno))
-                     .concat("\nLocation: ").concat(pslot_obj.location)
-                     .concat("\nDate: ").concat(date)
-                     .concat("\nCheck In: ").concat(Integer.toString(checkin)).concat(":00")
-                     .concat("\nCheck Out: ").concat(Integer.toString(checkout)).concat(":00")
-                     .concat("\nRate Per Hour: ").concat(Double.toString(pslot_obj.getParkingRatePerHour()))
-                     .concat("\nBill Amount: ").concat(Double.toString(b_amt));
+                .concat("\nBooking Reference Number: ").concat(Integer.toString(refno))
+                .concat("\nLocation: ").concat(pslot_obj.location)
+                .concat("\nDate: ").concat(date)
+                .concat("\nCheck In: ").concat(Integer.toString(checkin)).concat(":00")
+                .concat("\nCheck Out: ").concat(Integer.toString(checkout)).concat(":00")
+                .concat("\nRate Per Hour: ").concat(Double.toString(pslot_obj.getParkingRatePerHour()))
+                .concat("\nBill Amount: ").concat(Double.toString(b_amt));
 
         String subj = "MMP Booking ".concat(Integer.toString(refno));
 
@@ -100,7 +101,8 @@ public class UserService {
     }
 
     //test
-/*    public void checkout() throws ExecutionException, InterruptedException {
+    /*@Scheduled(cron = "0 0 10-17")
+    public void checkout() throws ExecutionException, InterruptedException {
         //User u_obj;
         //ParkingSlot p_obj;
         //Booking b_obj;
@@ -115,8 +117,21 @@ public class UserService {
                     p_obj.pSlotRelease(u_obj.uid, b_obj.date, b_obj.getCheckin(), b_obj.getCheckout());
                     u_obj.updateWallet(-(b_obj.getBillAmount() - 100));
                     b_obj.checkedout = true;
-                    new ParkingSlotService().saveParkingSlot(parkingSlot);
 
+                    new ParkingSlotService().saveParkingSlot(p_obj);
+
+                    String txt = "Dear User,\nYou have checked out of MMP Parking Slot ".concat(p_obj.id)
+                        .concat(".\nYour Bill Details are:-\nWallet Balance: ").concat(Double.toString(u_obj.wallet))
+                        .concat("\nBooking Reference Number: ").concat(Integer.toString(b_obj.getRefNo()))
+                        .concat("\nDate: ").concat(b_obj.date)
+                        .concat("\nCheck In: ").concat(Integer.toString(b_obj.checkin)).concat(":00")
+                        .concat("\nCheck Out: ").concat(Integer.toString(b_obj.checkout)).concat(":00")
+                        .concat("\nRate Per Hour: ").concat(Double.toString(p_obj.parkingRatePerHour))
+                        .concat("\nBill Amount: ").concat(Double.toString(b_obj.billAmount));
+
+                    String subj = "MMP Checkout ".concat(Integer.toString(b_obj.getRefNo()));
+
+                    new EmailConfig().defMailSender(u_obj.email, subj, txt);
                 }
                 b++;
             }
@@ -128,8 +143,8 @@ public class UserService {
     public void checkout(String userID, String parkingSlotID, int refno) throws ExecutionException, InterruptedException {
         User u_obj = getUser(userID);
         ParkingSlot parkingSlot = new ParkingSlotService().getSlotById(parkingSlotID);
-        for(Booking b : u_obj.bookingList) {
-            if(!b.checkedout && b.getRefNo() == refno) {
+        for (Booking b : u_obj.bookingList) {
+            if (!b.checkedout && b.getRefNo() == refno) {
                 parkingSlot.pSlotRelease(userID, b.date, b.getCheckin(), b.getCheckout());
                 u_obj.updateWallet(-(b.getBillAmount() - 100));
                 b.checkedout = true;
@@ -151,9 +166,9 @@ public class UserService {
                 new EmailConfig().defMailSender(u_obj.email, subj, txt);
             }
         }
-
-        //saveUserDetails(u_obj);
-        //new ParkingSlotService().saveParkingSlot(parkingSlot);
+    }
+    //saveUserDetails(u_obj);
+    //new ParkingSlotService().saveParkingSlot(parkingSlot);
 
         /*String txt = "Dear User,\nYou have checked out of MMP Parking Slot ".concat(parkingSlotID)
                      .concat(".\nYour Bill Details are:-\nWallet Balance: ").concat(Double.toString(u_obj.wallet))
@@ -167,7 +182,6 @@ public class UserService {
         String subj = "MMP Checkout ".concat(Integer.toString(b_obj.getRefNo()));
 
         new EmailConfig().defMailSender(u_obj.email, subj, txt);*/
-    }
 
     public void promocode_check(String userID) throws ExecutionException, InterruptedException {
         User u_obj = getUser(userID);
