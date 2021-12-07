@@ -17,6 +17,12 @@ public class WorkerController {
         return workerService.saveWorker(newWorker);
     }
 
+    @RequestMapping("/delete")
+    String deleteWorker(
+            @RequestParam String workerID) throws ExecutionException, InterruptedException {
+        return workerService.deleteWorker(workerID).toString();
+    }
+
     @RequestMapping("/getall")
     public List<Worker> getAllWorkers() throws ExecutionException, InterruptedException {
         return  workerService.getAllWorkers();

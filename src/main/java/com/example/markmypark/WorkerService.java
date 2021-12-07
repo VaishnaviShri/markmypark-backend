@@ -1,6 +1,7 @@
 package com.example.markmypark;
 
 import com.google.api.core.ApiFuture;
+import com.google.cloud.Timestamp;
 import com.google.cloud.firestore.*;
 import com.google.firebase.cloud.FirestoreClient;
 import java.util.ArrayList;
@@ -17,6 +18,11 @@ public class WorkerService {
     public String saveWorker(Worker worker) throws ExecutionException, InterruptedException {
         ApiFuture<WriteResult> collectionsApiFuture = dbFirestore.collection("workers").document(worker.workerID).set(worker);
         return collectionsApiFuture.get().getUpdateTime().toString();
+    }
+    public Timestamp deleteWorker(String workerID) throws ExecutionException, InterruptedException {
+        // asynchronously delete a document
+        ApiFuture<WriteResult> writeResult = dbFirestore.collection("workers").document(workerID).delete();
+        return writeResult.get().getUpdateTime();
     }
 
     public List<Worker> getAllWorkers() throws ExecutionException, InterruptedException {
