@@ -91,6 +91,18 @@ public class UserService {
         return u_obj;
     }
 
+    public int getNewBookingID() throws ExecutionException, InterruptedException {
+        DocumentReference docRef = dbFirestore.collection("constants").document("bookingRefNumber");
+        ApiFuture<DocumentSnapshot> future = docRef.get();
+        DocumentSnapshot document = future.get();
+        double count = document.getDouble("count");
+        double returnID = count;
+        DocumentReference docRef2 = dbFirestore.collection("constants").document("bookingRefNumber");
+        ApiFuture<WriteResult> future2 = docRef2.update("count", count+1);
+        int refNo = 56746200+ (int)returnID;
+        return refNo;
+    }
+
     //test
     public String getCurrentHour() {
         LocalDateTime dateTime = LocalDateTime.now();
