@@ -40,16 +40,16 @@ public class UserController {
     public void booker(@RequestParam String userID,
                        @RequestParam String parkingSlotID,
                        @RequestParam String dt,
-                       @RequestParam int checkin,
-                       @RequestParam int checkout,
+                       @RequestParam String checkin,
+                       @RequestParam String checkout,
                        @RequestParam Integer refno)
             throws ExecutionException, InterruptedException {
 
         ParkingSlotService parkingSlotService = new ParkingSlotService();
-        int pSlotBookStatus = parkingSlotService.addParkingSlotBooking(userID, parkingSlotID, dt, checkin, checkout);
+        int pSlotBookStatus = parkingSlotService.addParkingSlotBooking(userID, parkingSlotID, dt, Integer.parseInt(checkin), Integer.parseInt(checkout));
 
         if(pSlotBookStatus == 1)
-            userService.addUserBooking(userID, parkingSlotID, dt, checkin, checkout, refno);
+            userService.addUserBooking(userID, parkingSlotID, dt, Integer.parseInt(checkin), Integer.parseInt(checkout), refno);
 
         userService.promocode_check(userID);
     }
