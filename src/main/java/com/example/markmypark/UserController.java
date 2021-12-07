@@ -54,10 +54,10 @@ public class UserController {
         userService.promocode_check(userID);
     }
 
-    @PutMapping("/addMoney")
-    public void addMoney(@RequestParam double amount, @RequestParam String userID) throws ExecutionException, InterruptedException {
+    @PostMapping("/addMoney")
+    public void addMoney(@RequestParam String amount, @RequestParam String userID) throws ExecutionException, InterruptedException {
         User u_obj = userService.getUser(userID);
-        u_obj.updateWallet(amount);
+        u_obj.updateWallet(Double.parseDouble(amount));
         userService.saveUserDetails(u_obj);
     }
 
