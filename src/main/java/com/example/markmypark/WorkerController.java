@@ -1,5 +1,6 @@
 package com.example.markmypark;
 
+import com.google.cloud.firestore.DocumentReference;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -35,14 +36,23 @@ public class WorkerController {
         return workerService.getWorker(id);
     }
 
-    @GetMapping("/getServicesTotal")
+    @GetMapping("/getservicestotal")
     public double getServicesTotal(
             @RequestParam String id
     ) throws ExecutionException, InterruptedException {
         return workerService.getWorker(id).getRatePerHour();
     }
 
-    //TODO: function to update worker rating with new average
-
-
+    @PutMapping("/updaterating")
+    public void updateRating(
+            @RequestParam String id,
+            @RequestParam double rating
+    ) throws ExecutionException, InterruptedException {
+        Worker worker = workerService.getWorker(id);
+        double currentRating = worker.rating;
+        double numberOfReviews = worker.noOfReviews;
+        worker.rating = (currentRating * numberOfReviews + rating)/ (numberOfReviews +1);
+        worker.noOfReviews++;
+        workerService.saveWorker(worker);
+    }
 }
