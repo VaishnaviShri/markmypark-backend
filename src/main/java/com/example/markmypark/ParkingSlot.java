@@ -95,7 +95,4 @@ public class ParkingSlot {
         this.worker = workerService.getWorker(workerID);
         this.parkingRatePerHour = parkingRatePerHour;
     }
-
-    //if no match found display based on location
-
 }

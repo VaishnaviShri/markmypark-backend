@@ -12,10 +12,6 @@ import java.util.concurrent.ExecutionException;
 @RequestMapping("/users")
 public class UserController {
 
-    //@Autowired
-    //private UserRepository userRepository;
-
-
     UserService userService = new UserService();
 
     @RequestMapping("/sayhi")

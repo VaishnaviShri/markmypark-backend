@@ -26,9 +26,6 @@ public class Worker {
         int ratePerHour=0;
         if(amenities!=null)
             ratePerHour = amenities.size() * 50; // each service costs Rs. 50
-        /*for(double price : amenities.values()){
-            ratePerHour +=price;
-        }*/
         this.ratePerHour = ratePerHour;
     }
     public Worker(){
