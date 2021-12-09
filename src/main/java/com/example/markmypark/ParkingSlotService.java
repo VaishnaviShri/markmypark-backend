@@ -5,14 +5,14 @@ import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.*;
 import com.google.firebase.cloud.FirestoreClient;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 import java.util.concurrent.ExecutionException;
 
 public class ParkingSlotService {
-    ParkingSlotService(){
+    ParkingSlotService() {
 
     }
+
     Firestore dbFirestore = FirestoreClient.getFirestore();
 
     public String saveParkingSlot(ParkingSlot parkingSlot) throws ExecutionException, InterruptedException {
@@ -31,6 +31,7 @@ public class ParkingSlotService {
         return parkingSlots;
 
     }
+
     public List<ParkingSlot> getFilteredSlots(String location, String date, int check_in, int check_out) throws ExecutionException, InterruptedException {
 
         ApiFuture<QuerySnapshot> future = dbFirestore.collection("parking_slots")
@@ -44,34 +45,39 @@ public class ParkingSlotService {
         return filterListAtLocation(allParkingSlots, date, check_in, check_out);
     }
 
-    public List<ParkingSlot> filterListAtLocation (List<ParkingSlot> allSlots, String date, int checkIn, int checkOut){
+    public List<ParkingSlot> filterListAtLocation(List<ParkingSlot> allSlots, String date, int checkIn, int checkOut) {
         List<ParkingSlot> match = new ArrayList<>();
-        for(ParkingSlot obj : allSlots){
+        for (ParkingSlot obj : allSlots) {
+            int flag = 0;
+            for (DayBooking db : obj.allBookings) {
+                if (db.date.equals(date)) {
 
-                for(DayBooking db : obj.allBookings){
-                    if(db.date.equals(date)){
-                        int flag = 0;
-                        for(int i = checkIn; i <= checkOut; i++){
-                            if(db.usersList.get(i) != null){
-                                flag = 1;
-                                break;
-                            }
+                    //int flag = 0;
+
+                    for (int i = checkIn; i < checkOut; i++) {
+                        if (db.getUserIDatHour(i) != null) {
+                            flag = 1;
+                            break;
                         }
-                        if(flag == 0)
-                            match.add(obj);
                     }
-                }
 
+                    //if (flag == 0)
+                    //    match.add(obj);
+                }
+            }
+            if(flag == 0)
+                match.add(obj);
         }
         return match;
     }
+
     public List<ParkingSlot> getSLotsByLocation(String location) throws ExecutionException, InterruptedException {
 
         ApiFuture<QuerySnapshot> future = dbFirestore.collection("parking_slots")
                 .whereEqualTo("location", location)
                 .get();
         List<QueryDocumentSnapshot> documents = future.get().getDocuments();
-        List<ParkingSlot> allParkingSlots = List.of(new ParkingSlot[]{new ParkingSlot("","",0)});
+        List<ParkingSlot> allParkingSlots = new ArrayList<>();//List.of(new ParkingSlot[]{new ParkingSlot("","",0)});
         for (QueryDocumentSnapshot document : documents) {
             allParkingSlots.add(document.toObject(ParkingSlot.class));
         }
@@ -85,12 +91,27 @@ public class ParkingSlotService {
         return document.toObject(ParkingSlot.class);
     }
 
-    public List<String> getlocationList() throws ExecutionException, InterruptedException {
+
+    public int addParkingSlotBooking(String userID, String parkingSlotID, String dt, int checkin, int checkout) throws ExecutionException, InterruptedException {
+
+        ParkingSlot obj = getSlotById(parkingSlotID);
+        int bookstatus = obj.book(userID, dt, checkin, checkout);
+
+        if(bookstatus == 1)
+            saveParkingSlot(obj);
+
+        return bookstatus;
+        //return obj;
+
+    }
+
+    public List<String> getlocationList () throws ExecutionException, InterruptedException {
         List<ParkingSlot> allSlots = getAllSlots();
         List<String> locations = new ArrayList<>();
-        for(ParkingSlot obj: allSlots){
+        for (ParkingSlot obj : allSlots) {
             locations.add(obj.location);
         }
         return locations;
+
     }
 }

@@ -6,19 +6,23 @@ public class Booking {
 
     @Id
     public int bookingID;
+    public String date;
     public int refNo;
-    public int slotID;
-    public Date checkin;
-    public Date checkout;
-    public int billAmount;
+    public String pSlotID;
+    public int checkin;
+    public int checkout;
+    public double billAmount;
+    public boolean checkedout = false;
 
-    public Booking(int refNo, int slotId, Date checkin, Date checkout, int billAmount) {
+    public Booking(int refNo, String pSlotID, String date, int checkin, int checkout) {
         this.refNo = refNo;
-        this.slotID = slotId;
+        this.pSlotID = pSlotID;
+        this.date = date;
         this.checkin = checkin;
         this.checkout = checkout;
-        this.billAmount = billAmount;
     }
+
+    public Booking() {}
 
     public int getRefNo() {
         return refNo;
@@ -28,35 +32,35 @@ public class Booking {
         this.refNo = refNo;
     }
 
-    public int getSlotID() {
-        return slotID;
+    public String getpSlotID() {
+        return pSlotID;
     }
 
-    public void setSlotID(int slotID) {
-        this.slotID = slotID;
+    public void setSlotID(String slotID) {
+        this.pSlotID = slotID;
     }
 
-    public Date getCheckin() {
+    public int getCheckin() {
         return checkin;
     }
 
-    public void setCheckin(Date checkin) {
+    public void setCheckin(int checkin) {
         this.checkin = checkin;
     }
 
-    public Date getCheckout() {
+    public int getCheckout() {
         return checkout;
     }
 
-    public void setCheckout(Date checkout) {
+    public void setCheckout(int checkout) {
         this.checkout = checkout;
     }
 
-    public int getBillAmount() {
+    public double getBillAmount() {
         return billAmount;
     }
 
-    public void setBillAmount(int billAmount) {
+    public void setBillAmount(double billAmount) {
         this.billAmount = billAmount;
     }
 }

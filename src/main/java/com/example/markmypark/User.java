@@ -5,6 +5,7 @@ import com.google.cloud.firestore.annotation.DocumentId;
 import org.springframework.cloud.gcp.data.firestore.Document;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -24,8 +25,8 @@ public class User {
     public String mob_no;
     public String car_reg_no;
     public String userType;
-    public double wallet =0.0;
-    public List<Booking> bookingList;
+    public double wallet = 0.0;
+    public List<Booking> bookingList = new ArrayList<>();
 
     public User(String uid, String email, String displayName, String photoURL, Boolean emailVerified, String first_name, String last_name, String user_name, String address, String mob_no, String car_reg_no, String userType, double wallet) {
         this.uid = uid;
@@ -43,12 +44,19 @@ public class User {
         this.wallet = wallet;
     }
 
+    public void book(Booking b) {
+        this.bookingList.add(b);
+    }
 
+    public void minAmtDeduction() {
+        this.wallet -= 100;
+    }
 
-
+    public void updateWallet(double amt) {
+        this.wallet += amt;
+    }
 
     public User() {}
-
 
 }
 
